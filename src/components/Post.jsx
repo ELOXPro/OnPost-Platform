@@ -93,7 +93,7 @@ export const Post = ({ username, image }) => {
      <div className=" flex w-full bg-slate-700">
        <img src={image} alt="Post" className="w-full h-64"/>
      </div>
-     <div className=" flex flex-row w-full bg-slate-900 p-2 gap-6 justify-start items-center">
+     <div className="z-10 flex flex-row w-full bg-slate-900 p-2 gap-6 justify-start items-center">
        <ReactButton imgUrl="/Assets/like.png" onClick={LikeClicked} choice={Liked}/>
        <ReactButton imgUrl="/Assets/dislike.png" onClick={DislikeClicked} choice={Disliked}/>
        <CommentButton imgUrl="/Assets/comment.png" onClick={() =>ViewComments(true)}/>
@@ -130,7 +130,7 @@ const ReactButton = (props) => {
     return (
         <button
             onClick ={onClick}
-            className={`z-0 cursor-pointer w-5 hover:opacity-25  transition-all`}>
+            className={`z-10 cursor-pointer w-5 hover:opacity-25  transition-all`}>
             {onview}
         </button>
 
@@ -138,7 +138,7 @@ const ReactButton = (props) => {
   };
 
   const CommentButton = (props) => {
-    const {label, onClick, imgUrl} = props;
+    const {onClick, imgUrl} = props;
     return (
         <button
             onClick ={onClick}
@@ -159,7 +159,7 @@ const ReactButton = (props) => {
         >
           <img src={"/Assets/close.png"} alt="MenuItem" className="w-8 md:w-11 h-8 md:h-11" />
         </button>
-        <div className="fixed top-20 md:top-36 left-12 md:left-96 w-72 md:w-1/2 h-96 p-2 bg-slate-700">
+        <div className="fixed z-50 top-20 md:top-36 left-12 md:left-96 w-72 md:w-1/2 h-96 p-2 bg-slate-700">
           <h3 className="text-slate-500 text-base md:text-2xl font-bold font-mono my-4">All Comments on {username}'s Post</h3>
           <div className="flex justify-center">
             {comments.map((comment, index) => (
