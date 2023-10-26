@@ -3,9 +3,8 @@ import { Post } from "./Post"
 
 export const Home = () => {
   return (
-    <div className="h-full w-full md:w-3/4 justify-center mt-5 items-center px-10">
-     <h3 className="text-5xl font-mono font-extrabold text-white ml-10 md:ml-auto ">Home</h3>
-     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-4/5 md:w-full mx-5 md:mx-auto">
+    <div className=" h-full w-3/5 overflow-y-scroll scrollbar-hide">
+     <div className="w-full p-32">
      {profiles.map((profile, index) => (
           <Post key={index} username={profile.username} image={profile.image} />
         ))}

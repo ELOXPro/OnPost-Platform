@@ -10,13 +10,11 @@ export const Post = ({ username, image }) => {
         const data = JSON.parse(localStorage.getItem('postData'));
         if (data) {
           setLiked(data.Liked);
-          setDisliked(data.Disliked);
           setComments(data.comments || []);
         }
       };
 
-    const [Liked, setLiked] = useState(50);
-    const [Disliked, setDisliked] = useState(50);
+    const [Liked, setLiked] = useState(false);
     const [CommentsVisible, ViewComments] = useState(false);
     const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState([]);
@@ -25,24 +23,20 @@ export const Post = ({ username, image }) => {
     onview = <CommentsBox ViewComments={ViewComments} comments={comments} username={username}/>;
    }
     const LikeClicked = () => {
-        setLiked(100);
-        setDisliked(50);
+      if (!Liked){
+        setLiked(true);
 
         saveData({
-            Liked: 100,
-            Disliked: 50,
+          Liked: true,
+          comments,
+        });};
+        if (Liked){
+          setLiked(false);
+          
+          saveData({
+            Liked: false,
             comments,
-          });
-      };
-    const DislikeClicked = () => {
-        setLiked(50);
-        setDisliked(100);
-
-        saveData({
-            Liked: 50,
-            Disliked: 100,
-            comments,
-          });
+          });};
       };
       const addComment = () => {
         if (newComment) {
@@ -51,7 +45,6 @@ export const Post = ({ username, image }) => {
           setNewComment('');
           saveData({
             Liked,
-            Disliked,
             comments: updatedComments,
           });
         }
@@ -61,8 +54,7 @@ export const Post = ({ username, image }) => {
 
         localStorage.clear();
 
-        setLiked(50);
-        setDisliked(50);
+        setLiked(false);
         setComments([]);
         setNewComment('');
       };
@@ -72,59 +64,49 @@ export const Post = ({ username, image }) => {
       }, []);
 
   return (
-    <motion.div className="h-auto w-72 justify-center mt-10 bg-gradient-to-bl from-slate-900 via-slate-800 to-slate-700 rounded-lg"
-    initial={{
-        opacity: 0,
-        y:50,
-      }}
-      whileInView={{
-        opacity: 1,
-        y:0,
-        transition:{
-          duration: 1,
-          delay: 0.2,
-        }
-      }}
+    <div className="w-full justify-center items-center border-b-2 border-zinc-800"
     >
-     <div className=" flex flex-row w-full bg-slate-900 p-2 justify-start gap-4 items-center rounded-t-lg">
-       <img src="/Assets/user.png" alt="UserProfile" className="w-11 h-11"/>
+     <div className=" flex flex-row w-full p-2 justify-start gap-4 items-center rounded-t-lg">
+       <img src={image} alt="UserProfile" className="w-11 h-11 rounded-full"/>
        <h3 className="text-xl font-mono font-bold text-white">{username}</h3>
      </div>
-     <div className=" flex w-full bg-slate-700">
-       <img src={image} alt="Post" className="w-full h-64"/>
+     <div className=" border-zinc-800 border-2">
+       <img src={image} alt="Post" className="w-full h-full"/>
      </div>
-     <div className="z-10 flex flex-row w-full bg-slate-900 p-2 gap-6 justify-start items-center">
+     <div className="z-10 flex flex-row w-full p-2 gap-6 justify-start items-center">
        <ReactButton imgUrl="/Assets/like.png" onClick={LikeClicked} choice={Liked}/>
-       <ReactButton imgUrl="/Assets/dislike.png" onClick={DislikeClicked} choice={Disliked}/>
        <CommentButton imgUrl="/Assets/comment.png" onClick={() =>ViewComments(true)}/>
      </div>
-     <div className=" flex flex-col w-full p-2 justify-center items-center gap-4">
+     <div className=" flex flex-col w-full py-2 justify-start gap-2">
      <textarea
-            className="w-full shadow border rounded py-1 px-3 text-white font-mono font-bold focus:outline-none focus:shadow-outline bg-slate-900"
+            className="w-full shadow border rounded py-1 px-3 text-white font-mono font-bold focus:outline-none focus:shadow-outline bg-black"
             name="comment"
             placeholder="Add Your Comment"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
           />
-          <div className="flex flex-row gap-2">
-        <button onClick={addComment} className="text-sm text-white font-bold font-mono p-2 bg-blue-700 hover:bg-blue-900 rounded-lg transition-all">Add Comment</button>
-        <button onClick={deleteAll} className="text-sm text-white font-bold font-mono p-2 bg-blue-700 hover:bg-blue-900 rounded-lg transition-all">Clear All</button>
+          <div className="flex flex-row gap-2 pl-2">
+        <button onClick={addComment} className="text-sm font-bold font-mono  text-zinc-700 hover:text-zinc-900  transition-all">Add Comment</button>
+        <button onClick={deleteAll} className="text-sm font-bold font-mono text-zinc-700 hover:text-zinc-900 transition-all">Clear All</button>
         </div> 
      </div>
      {onview}
-    </motion.div>
+    </div>
   )
 }
 
 const ReactButton = (props) => {
-    const {onClick, imgUrl,choice} = props;
+    const {onClick,choice} = props;
     let onview;
 
-    if (choice===50){
-      onview = <img src={imgUrl} alt="MenuItem" className="w-5 h-5 opacity-50"/>;
+    if (choice===false){
+      onview = <img src="/Assets/dislike.png" alt="MenuItem" className="w-5 h-5 opacity-50"/>;
     }
-    if (choice===100){
-      onview = <img src={imgUrl} alt="MenuItem" className="w-5 h-5 opacity-100"/>;
+    else if (choice===true){
+      onview = <img src="/Assets/like.png" alt="MenuItem" className="w-5 h-5 opacity-100"/>;
+    }
+    else {
+      onview = <img src="/Assets/like.png" alt="MenuItem" className="w-5 h-5 opacity-100"/>;
     }
 
     return (
