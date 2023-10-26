@@ -118,11 +118,20 @@ export const Post = ({ username, image }) => {
 
 const ReactButton = (props) => {
     const {onClick, imgUrl,choice} = props;
+    let onview;
+
+    if (choice===50){
+      onview = <img src={imgUrl} alt="MenuItem" className="w-5 h-5 opacity-50"/>;
+    }
+    if (choice===100){
+      onview = <img src={imgUrl} alt="MenuItem" className="w-5 h-5 opacity-100"/>;
+    }
+
     return (
         <button
             onClick ={onClick}
-            className={`z-0 cursor-pointer w-5 hover:opacity-25 opacity-${choice} transition-all`}>
-            <img src={imgUrl} alt="MenuItem" className="w-5 h-5"/>
+            className={`z-0 cursor-pointer w-5 hover:opacity-25  transition-all`}>
+            {onview}
         </button>
 
     );
