@@ -58,7 +58,7 @@ function App() {
          />
     <div className="fixed -z-10 top-0 right-0 h-full w-full bg-white dark:bg-black">
     <Menu ChangePage={setPage}/>
-    <div className="flex h-full w-full justify-center pb-11 md:pb-auto">
+    <div className="flex h-full w-full justify-center pb-11 md:pb-0">
       <Home/>
     </div>
     </div>
