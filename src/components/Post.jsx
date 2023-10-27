@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { useState,useEffect } from "react"
 
-export const Post = ({ username, image }) => {
+export const Post = ({ username, image,caption, location, likes }) => {
    const path = 'postData' + username;
 
     const saveData = (data) => {
@@ -11,24 +11,32 @@ export const Post = ({ username, image }) => {
         const data = JSON.parse(localStorage.getItem(path));
         if (data) {
           setLiked(data.Liked);
+          setSaved(data.Saved);
           setComments(data.comments || []);
         }
       };
 
     const [Liked, setLiked] = useState(false);
+    const [Saved, setSaved] = useState(false);
     const [CommentsVisible, ViewComments] = useState(false);
     const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState([]);
     let onview;
+    let like = likes;
    if (CommentsVisible === true){
     onview = <CommentsBox ViewComments={ViewComments} comments={comments} username={username}/>;
    }
+   if (Liked === true){
+    like = like + 1;}
+    else{
+      like = like;}
     const LikeClicked = () => {
       if (!Liked){
         setLiked(true);
 
         saveData({
           Liked: true,
+          Saved,
           comments,
         });};
         if (Liked){
@@ -36,9 +44,28 @@ export const Post = ({ username, image }) => {
           
           saveData({
             Liked: false,
+            Saved,
             comments,
           });};
       };
+      const SaveClicked = () => {
+        if (!Saved){
+          setSaved(true);
+  
+          saveData({
+            Liked,
+            Saved: true,
+            comments,
+          });};
+          if (Saved){
+            setSaved(false);
+    
+            saveData({
+              Liked,
+              Saved: false,
+              comments,
+            });};
+        };
       const addComment = () => {
         if (newComment) {
           const updatedComments = [...comments, newComment];
@@ -46,6 +73,7 @@ export const Post = ({ username, image }) => {
           setNewComment('');
           saveData({
             Liked,
+            Saved,
             comments: updatedComments,
           });
         }
@@ -56,6 +84,7 @@ export const Post = ({ username, image }) => {
         localStorage.clear();
 
         setLiked(false);
+        setSaved(false);
         setComments([]);
         setNewComment('');
       };
@@ -67,9 +96,17 @@ export const Post = ({ username, image }) => {
   return (
     <div className="w-full justify-center items-center border-b-2 border-zinc-200 dark:border-zinc-800"
     >
-     <div className=" flex flex-row w-full p-2 justify-start gap-4 items-center rounded-t-lg">
+     <div className=" flex flex-row w-full py-2 justify-start gap-4 items-center rounded-t-lg">
        <img src={image} alt="UserProfile" className="w-11 h-11 rounded-full"/>
+       <div className="flex flex-col gap-0 justify-start text-left w-full">
        <h3 className="text-xl font-mono font-bold text-black dark:text-white">{username}</h3>
+       <h3 className="text-sm text-black dark:text-white">{location}</h3>
+       </div>
+      <div className="flex justify-end w-full items-center">
+      <OtherButton
+        imgUrl="M122.88,14.978c0,8.271-6.708,14.979-14.979,14.979s-14.976-6.708-14.976-14.979 C92.926,6.708,99.631,0,107.901,0S122.88,6.708,122.88,14.978L122.88,14.978z M29.954,14.978c0,8.271-6.708,14.979-14.979,14.979 S0,23.248,0,14.978C0,6.708,6.705,0,14.976,0S29.954,6.708,29.954,14.978L29.954,14.978z M76.417,14.978 c0,8.271-6.708,14.979-14.979,14.979c-8.27,0-14.978-6.708-14.978-14.979C46.46,6.708,53.168,0,61.438,0 C69.709,0,76.417,6.708,76.417,14.978L76.417,14.978z" 
+        onClick={() =>alert('Work In Progress')}/>
+      </div>
      </div>
      <div className=" border-zinc-200 dark:border-zinc-800 border-2">
        <img src={image} alt="Post" className="w-full h-full"/>
@@ -82,10 +119,21 @@ export const Post = ({ username, image }) => {
         <OtherButton
         imgUrl="M96.14,12.47l-76.71-1.1,28.3,27.85L96.14,12.47ZM53.27,49l9.88,39.17L102.1,22,53.27,49ZM117,1.6a5.59,5.59,0,0,1,4.9,8.75L66.06,105.21a5.6,5.6,0,0,1-10.44-1.15L41.74,49,1.67,9.57A5.59,5.59,0,0,1,5.65,0L117,1.6Z" 
         onClick={() =>alert('Work in Progress')}/>
+        <div className="flex justify-end w-full items-center">
+        <SaveButton onClick={SaveClicked} choice={Saved}/>
+        </div>
+     </div>
+     <div className="flex flex-row gap-2 text-left items-center">
+       <h3 className="text-base font-mono font-bold text-black dark:text-white">{like}</h3>
+       <h3 className="text-sm font-mono font-bold text-black dark:text-white">likes</h3>
+     </div>
+     <div className="flex flex-row gap-2 text-left items-center">
+       <h3 className="text-base font-mono font-bold text-black dark:text-white">{username}</h3>
+       <h3 className="text-sm text-black dark:text-white">{caption}</h3>
      </div>
      <div className=" flex flex-col w-full py-2 justify-start gap-2">
      <textarea
-            className="w-full shadow border rounded py-1 px-3 text-black dark:text-white font-mono font-bold focus:outline-none focus:shadow-outline bg-white dark:bg-black"
+            className="w-full border-0 rounded py-1 px-0 text-black dark:text-white font-mono font-bold focus:outline-none bg-white dark:bg-black"
             name="comment"
             placeholder="Add Your Comment"
             value={newComment}
@@ -181,3 +229,36 @@ const ReactButton = (props) => {
     );
   };
   
+  const SaveButton = (props) => {
+    const {onClick,choice} = props;
+    let onview;
+    let recolor;
+
+    if (choice===false){
+      onview = "M4.95,0h112.68c2.74,0,4.95,2.22,4.95,4.95v112.97c0,2.74-2.22,4.95-4.95,4.95c-1.37,0-2.61-0.56-3.51-1.46L61.16,75.79 L8.18,121.66c-2.06,1.78-5.18,1.56-6.97-0.5c-0.81-0.93-1.2-2.09-1.2-3.23H0V4.95C0,2.22,2.22,0,4.95,0L4.95,0z M112.68,9.91H9.91 v97.2l47.97-41.54c1.82-1.62,4.61-1.68,6.51-0.04l48.3,41.61V9.91L112.68,9.91z"
+      recolor = "fill-black dark:fill-white w-5 h-6"
+    }
+    else if (choice===true){
+      onview = "0,0 122.57,0 122.57,122.88 61.13,69.95 0,122.88 0,0"
+      recolor = "fill-black dark:fill-white w-5 h-6"
+    }
+    else {
+      onview = "M4.95,0h112.68c2.74,0,4.95,2.22,4.95,4.95v112.97c0,2.74-2.22,4.95-4.95,4.95c-1.37,0-2.61-0.56-3.51-1.46L61.16,75.79 L8.18,121.66c-2.06,1.78-5.18,1.56-6.97-0.5c-0.81-0.93-1.2-2.09-1.2-3.23H0V4.95C0,2.22,2.22,0,4.95,0L4.95,0z M112.68,9.91H9.91 v97.2l47.97-41.54c1.82-1.62,4.61-1.68,6.51-0.04l48.3,41.61V9.91L112.68,9.91z"
+      recolor = "fill-black dark:fill-white w-5 h-6"
+    }
+
+    return (
+      <button
+      onClick ={onClick}
+      className="hover:opacity-25"
+      >
+      <svg className={recolor}
+      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.07" >
+      <path d={onview}/>
+      <g>
+      </g>
+      </svg>
+  </button>
+
+    );
+  };

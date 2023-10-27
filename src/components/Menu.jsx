@@ -6,17 +6,17 @@ export const Menu = (props) => {
     const {ChangePage} = props;
 
   return (
-    <div className="fixed top-0 left-0 h-full w-11 md:w-1/5 bg-white dark:bg-black border-zinc-200 dark:border-zinc-800 border-r-2">
-        <div className="flex flex-col md:flex-row gap-4 justify-center md:justify-start  items-center p-2 md:p-4 overflow-hidden mt-4 md:mt-auto">
-          <svg className="fill-black dark:fill-white visible md:invisible w-8 md:w-0 h-9 md:h-16"
+    <div className="fixed top-auto bottom-0 md:top-0 left-0 h-11 md:h-full w-full md:w-1/5 bg-white dark:bg-black border-zinc-200 dark:border-zinc-800 border-r-0 md:border-r-2 flex flex-row md:flex-col">
+        <div className="flex flex-row gap-6 justify-center md:justify-start  items-center p-2 md:p-4 overflow-hidden mt-0 md:mt-auto">
+          <svg className="fill-black dark:fill-white visible md:invisible w-7 md:w-0 h-8 md:h-16"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.07" >
             <path d="M61.72,0.28c14.77,0,28.33,5.22,38.93,13.9L46.86,45.24V2.1C51.62,0.91,56.6,0.28,61.72,0.28L61.72,0.28z M105.99,19.12c10.63,11.05,17.17,26.06,17.17,42.6c0,3.02-0.22,5.98-0.64,8.89L69.66,40.09L105.99,19.12L105.99,19.12z M121.05,77.76c-4.9,18.16-17.91,32.99-34.91,40.36l0-60.51L121.05,77.76L121.05,77.76z M79.21,120.64 c-5.54,1.64-11.41,2.53-17.48,2.53c-13.75,0-26.44-4.52-36.67-12.14l54.16-31.27L79.21,120.64L79.21,120.64z M19.41,106.27 C7.63,95.07,0.28,79.26,0.28,61.72c0-3.03,0.22-6,0.65-8.92l54.51,32.65L19.41,106.27L19.41,106.27z M2.42,45.62 C7.58,26.57,21.67,11.21,39.91,4.27l-0.44,63.54L2.42,45.62L2.42,45.62z"/>
             <g>
             </g>
             </svg>
-         <h3 className="invisible md:visible text-3xl text-black dark:text-white font-mono font-extrabold">OnPost</h3>
+         <h3 className="invisible md:visible w-0 md:w-auto text-3xl text-black dark:text-white font-mono font-extrabold">OnPost</h3>
         </div>
-        <div className="flex flex-col mx-o md:mx-4 justify-start h-full gap-4 md:gap-2 overflow-hidden md:overflow-auto">       
+        <div className="flex flex-row md:flex-col mx-o md:mx-4 justify-start h-full gap-2 md:gap-2 overflow-hidden md:overflow-auto">       
          <MenuButton label="Home" 
           imgUrl="M61.44,0L0,60.18l14.99,7.87L61.04,19.7l46.85,48.36l14.99-7.87L61.44,0L61.44,0z M18.26,69.63L18.26,69.63 L61.5,26.38l43.11,43.25h0v0v42.43H73.12V82.09H49.49v29.97H18.26V69.63L18.26,69.63L18.26,69.63z" 
           onClick={() => alert("Work In Progress")}
