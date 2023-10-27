@@ -5,7 +5,7 @@ import { Home } from './components/Home'
 
 function App() {
    const [Page, setPage] = useState(0);
-   const [Light, setLight] = useState(false);
+   const [Light, setLight] = useState(true);
 
     const path = 'Theme';
 
