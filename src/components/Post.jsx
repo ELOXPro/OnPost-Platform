@@ -2,72 +2,72 @@ import { motion } from "framer-motion"
 import { useState,useEffect } from "react"
 
 export const Post = ({ username, image,caption, location, likes }) => {
-   const path = 'postData' + username;
+  const path = 'postData' + username;
 
-    const saveData = (data) => {
-        localStorage.setItem(path, JSON.stringify(data));
-      };
-      const loadData = () => {
-        const data = JSON.parse(localStorage.getItem(path));
-        if (data) {
-          setLiked(data.Liked);
-          setSaved(data.Saved);
-          setComments(data.comments || []);
-        }
-      };
+  const saveData = (data) => {
+    localStorage.setItem(path, JSON.stringify(data));
+    };
+  const loadData = () => {
+    const data = JSON.parse(localStorage.getItem(path));
+    if (data) {
+      setLiked(data.Liked);
+      setSaved(data.Saved);
+      setComments(data.comments || []);
+      }
+    };
 
-    const [Liked, setLiked] = useState(false);
-    const [Saved, setSaved] = useState(false);
-    const [CommentsVisible, ViewComments] = useState(false);
-    const [newComment, setNewComment] = useState('');
-    const [comments, setComments] = useState([]);
-    let onview;
-    let like = likes;
-   if (CommentsVisible === true){
-    onview = <CommentsBox ViewComments={ViewComments} comments={comments} username={username}/>;
-   }
-   if (Liked === true){
+  const [Liked, setLiked] = useState(false);
+  const [Saved, setSaved] = useState(false);
+  const [CommentsVisible, ViewComments] = useState(false);
+  const [newComment, setNewComment] = useState('');
+  const [comments, setComments] = useState([]);
+  let onview;
+  let like = likes;
+  if (CommentsVisible === true){
+    onview = <CommentsBox ViewComments={ViewComments} comments={comments} username={username} image={image} location={location} caption={caption}/>;
+  }
+  if (Liked === true){
     like = like + 1;}
-    else{
-      like = like;}
-    const LikeClicked = () => {
-      if (!Liked){
-        setLiked(true);
+  else{
+    like = like;}
+  const LikeClicked = () => {
+    if (!Liked){
+      setLiked(true);
+
+      saveData({
+        Liked: true,
+        Saved,
+        comments,
+      });};
+    if (Liked){
+      setLiked(false);
+
+      saveData({
+        Liked: false,
+        Saved,
+        comments,
+      });};
+  };
+  const SaveClicked = () => {
+    if (!Saved){
+      setSaved(true);
+
+      saveData({
+        Liked,
+        Saved: true,
+        comments,
+      });};
+      if (Saved){
+        setSaved(false);
 
         saveData({
-          Liked: true,
-          Saved,
+          Liked,
+          Saved: false,
           comments,
         });};
-        if (Liked){
-          setLiked(false);
-          
-          saveData({
-            Liked: false,
-            Saved,
-            comments,
-          });};
-      };
-      const SaveClicked = () => {
-        if (!Saved){
-          setSaved(true);
-  
-          saveData({
-            Liked,
-            Saved: true,
-            comments,
-          });};
-          if (Saved){
-            setSaved(false);
-    
-            saveData({
-              Liked,
-              Saved: false,
-              comments,
-            });};
-        };
+  };
       const addComment = () => {
-        if (newComment) {
+        if (newComment.trim() !== '') {
           const updatedComments = [...comments, newComment];
           setComments(updatedComments);
           setNewComment('');
@@ -88,15 +88,20 @@ export const Post = ({ username, image,caption, location, likes }) => {
         setComments([]);
         setNewComment('');
       };
+      const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+          addComment();
+        }
+      };
 
     useEffect(() => {
         loadData();
       }, []);
 
   return (
-    <div className="w-full justify-center items-center border-b-2 border-zinc-200 dark:border-zinc-800"
+    <div className="w-full md:w-5/6 justify-center items-center border-b-2 border-zinc-200 dark:border-zinc-800"
     >
-     <div className=" flex flex-row w-full py-2 justify-start gap-4 items-center rounded-t-lg">
+     <div className=" flex flex-row w-full py-2 justify-start gap-4 items-center">
        <img src={image} alt="UserProfile" className="w-11 h-11 rounded-full"/>
        <div className="flex flex-col gap-0 justify-start text-left w-full">
        <h3 className="text-xl font-mono font-bold text-black dark:text-white">{username}</h3>
@@ -104,7 +109,7 @@ export const Post = ({ username, image,caption, location, likes }) => {
        </div>
       <div className="flex justify-end w-full items-center">
       <OtherButton
-        imgUrl="M122.88,14.978c0,8.271-6.708,14.979-14.979,14.979s-14.976-6.708-14.976-14.979 C92.926,6.708,99.631,0,107.901,0S122.88,6.708,122.88,14.978L122.88,14.978z M29.954,14.978c0,8.271-6.708,14.979-14.979,14.979 S0,23.248,0,14.978C0,6.708,6.705,0,14.976,0S29.954,6.708,29.954,14.978L29.954,14.978z M76.417,14.978 c0,8.271-6.708,14.979-14.979,14.979c-8.27,0-14.978-6.708-14.978-14.979C46.46,6.708,53.168,0,61.438,0 C69.709,0,76.417,6.708,76.417,14.978L76.417,14.978z" 
+        imgUrl="M122.88,14.978c0,8.271-6.708,14.979-14.979,14.979s-14.976-6.708-14.976-14.979 C92.926,6.708,99.631,0,107.901,0S122.88,6.708,122.88,14.978L122.88,14.978z M29.954,14.978c0,8.271-6.708,14.979-14.979,14.979 S0,23.248,0,14.978C0,6.708,6.705,0,14.976,0S29.954,6.708,29.954,14.978L29.954,14.978z M76.417,14.978 c0,8.271-6.708,14.979-14.979,14.979c-8.27,0-14.978-6.708-14.978-14.979C46.46,6.708,53.168,0,61.438,0 C69.709,0,76.417,6.708,76.417,14.978L76.417,14.978z"
         onClick={() =>alert('Work In Progress')}/>
       </div>
      </div>
@@ -114,10 +119,10 @@ export const Post = ({ username, image,caption, location, likes }) => {
      <div className="z-10 flex flex-row w-full p-2 gap-6 justify-start items-center">
        <ReactButton onClick={LikeClicked} choice={Liked}/>
        <OtherButton
-        imgUrl="M61.44,0a61.46,61.46,0,0,1,54.91,89l6.44,25.74a5.83,5.83,0,0,1-7.25,7L91.62,115A61.43,61.43,0,1,1,61.44,0ZM96.63,26.25a49.78,49.78,0,1,0-9,77.52A5.83,5.83,0,0,1,92.4,103L109,107.77l-4.5-18a5.86,5.86,0,0,1,.51-4.34,49.06,49.06,0,0,0,4.62-11.58,50,50,0,0,0-13-47.62Z" 
+        imgUrl="M61.44,0a61.46,61.46,0,0,1,54.91,89l6.44,25.74a5.83,5.83,0,0,1-7.25,7L91.62,115A61.43,61.43,0,1,1,61.44,0ZM96.63,26.25a49.78,49.78,0,1,0-9,77.52A5.83,5.83,0,0,1,92.4,103L109,107.77l-4.5-18a5.86,5.86,0,0,1,.51-4.34,49.06,49.06,0,0,0,4.62-11.58,50,50,0,0,0-13-47.62Z"
         onClick={() =>ViewComments(true)}/>
         <OtherButton
-        imgUrl="M96.14,12.47l-76.71-1.1,28.3,27.85L96.14,12.47ZM53.27,49l9.88,39.17L102.1,22,53.27,49ZM117,1.6a5.59,5.59,0,0,1,4.9,8.75L66.06,105.21a5.6,5.6,0,0,1-10.44-1.15L41.74,49,1.67,9.57A5.59,5.59,0,0,1,5.65,0L117,1.6Z" 
+        imgUrl="M96.14,12.47l-76.71-1.1,28.3,27.85L96.14,12.47ZM53.27,49l9.88,39.17L102.1,22,53.27,49ZM117,1.6a5.59,5.59,0,0,1,4.9,8.75L66.06,105.21a5.6,5.6,0,0,1-10.44-1.15L41.74,49,1.67,9.57A5.59,5.59,0,0,1,5.65,0L117,1.6Z"
         onClick={() =>alert('Work in Progress')}/>
         <div className="flex justify-end w-full items-center">
         <SaveButton onClick={SaveClicked} choice={Saved}/>
@@ -131,18 +136,26 @@ export const Post = ({ username, image,caption, location, likes }) => {
        <h3 className="text-base font-mono font-bold text-black dark:text-white">{username}</h3>
        <h3 className="text-sm text-black dark:text-white">{caption}</h3>
      </div>
-     <div className=" flex flex-col w-full py-2 justify-start gap-2">
-     <textarea
+     <div className=" flex flex-row w-full py-2 justify-start gap-2">
+     <input
             className="w-full border-0 rounded py-1 px-0 text-black dark:text-white font-mono font-bold focus:outline-none bg-white dark:bg-black"
             name="comment"
             placeholder="Add Your Comment"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
-          <div className="flex flex-row gap-2 pl-2">
-        <button onClick={addComment} className="text-sm font-bold font-mono  text-zinc-500 hover:text-zinc-900  transition-all">Add Comment</button>
-        <button onClick={deleteAll} className="text-sm font-bold font-mono text-zinc-500 hover:text-zinc-900 transition-all">Clear All</button>
-        </div> 
+          <div className="flex flex-col gap-2 pl-2">
+          {newComment.trim() !== '' && (
+          <button
+            onClick={addComment}
+            className="text-sm font-bold font-mono text-blue-500 hover:text-zinc-900 transition-all"
+          >
+            Post
+          </button>
+        )}
+        <button onClick={deleteAll} className="invisible h-0 w-0 text-sm font-bold font-mono text-zinc-500 hover:text-zinc-900 transition-all">Clear</button>
+        </div>
      </div>
      {onview}
     </div>
@@ -201,11 +214,12 @@ const ReactButton = (props) => {
   };
 
   const CommentsBox = (props) => {
-    const { comments, ViewComments,username } = props;
+    const { comments, ViewComments, username, image, caption, location} = props;
     return (
       <>
+        <div className="fixed z-20 top-0 left-0 w-full h-full py-0 md:py-10 px-0 md:px-40 bg-white dark:bg-black border-zinc-400 dark:border-zinc-800 bg-opacity-50 dark:bg-opacity-75">
         <button
-          className="absolute top-10 right-8 md:top-40 md:right-48 z-50 hover:opacity-25 transition-all"
+          className="absolute top-2 right-2 md:top-16 md:right-24 z-40 hover:opacity-25 transition-all cursor-pointer"
           onClick={() => ViewComments(false)}
         >
           <svg className="fill-black dark:fill-white w-8 h-9"
@@ -215,49 +229,71 @@ const ReactButton = (props) => {
             </g>
             </svg>
         </button>
-        <div className="fixed z-20 top-20 md:top-36 left-12 md:left-96 w-72 md:w-1/2 h-96 p-2 bg-white dark:bg-black border-zinc-400 dark:border-zinc-800 border-2 ">
-          <h3 className="text-slate-500 text-base md:text-2xl font-bold font-mono my-4">All Comments on {username}'s Post</h3>
-          <div className="flex justify-center">
-            {comments.map((comment, index) => (
-              <p key={index} className="text-base text-black dark:text-white font-mono font-bold truncate">
-                {comment}
-              </p>
-            ))}
+        <div className="flex flex-row w-full h-full bg-white dark:bg-black border-zinc-200 dark:border-zinc-800 border-2 ">
+          <div className="w-0 md:w-1/2">
+            <img src={image} alt="Post" className="w-full h-full"/>
           </div>
+          <div className="flex flex-col gap-2 w-full md:w-1/2">
+              <div className=" flex flex-row w-full p-2 justify-start gap-4 items-center border-zinc-200 dark:border-zinc-800 border-b-2">
+                <img src={image} alt="UserProfile" className="w-11 h-11 rounded-full"/>
+                <div className="flex flex-col gap-0 justify-start text-left w-full">
+                  <h3 className="text-xl font-mono font-bold text-black dark:text-white">{username}</h3>
+                  <h3 className="text-sm text-black dark:text-white">{location}</h3>
+                </div>
+                <div className="flex justify-center md:justify-end w-full items-center">
+                  <OtherButton
+                  imgUrl="M122.88,14.978c0,8.271-6.708,14.979-14.979,14.979s-14.976-6.708-14.976-14.979 C92.926,6.708,99.631,0,107.901,0S122.88,6.708,122.88,14.978L122.88,14.978z M29.954,14.978c0,8.271-6.708,14.979-14.979,14.979 S0,23.248,0,14.978C0,6.708,6.705,0,14.976,0S29.954,6.708,29.954,14.978L29.954,14.978z M76.417,14.978 c0,8.271-6.708,14.979-14.979,14.979c-8.27,0-14.978-6.708-14.978-14.979C46.46,6.708,53.168,0,61.438,0 C69.709,0,76.417,6.708,76.417,14.978L76.417,14.978z"
+                  onClick={() =>alert('Work In Progress')}/>
+                </div>
+              </div>
+              <div className="flex flex-row items-center gap-2 p-2">
+              <img src={image} alt="UserProfile" className="w-8 h-8 rounded-full"/>
+              <h3 className="text-sm font-bold text-black dark:text-white">{username}</h3>
+              <h3 className="text-sm text-black dark:text-white py-4">{caption}</h3>
+              </div>
+              <ul className="px-2 overflow-y-scroll scrollbar-hide">
+                {comments.map((comment, index) => (
+                <div className="py-2 w-full">
+                <li className="text-base text-black dark:text-white font-mono truncate" key={index}><div className="flex flex-row gap-2 justify-start w-full">
+                  <svg className="fill-blue-700 dark:fill-blue-500 w-6 h-6 rounded-full"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.07" ><path d="M0,121.42l0-19.63c10.5-4.67,42.65-13.56,44.16-26.41c0.34-2.9-6.5-13.96-8.07-19.26 c-3.36-5.35-4.56-13.85-0.89-19.5c1.46-2.25,0.84-10.44,0.84-13.53c0-30.77,53.92-30.78,53.92,0c0,3.89-0.9,11.04,1.22,14.1 c3.54,5.12,1.71,14.19-1.27,18.93c-1.91,5.57-9.18,16.11-8.56,19.26c2.31,11.74,32.13,19.63,41.52,23.8l0,22.23L0,121.42L0,121.42z"/>
+                  </svg>
+                  <p className="font-bold">User</p> {comment}</div></li></div>
+                ))}
+              </ul>
+              </div>
+            </div>
         </div>
       </>
     );
   };
-  
+
   const SaveButton = (props) => {
     const {onClick,choice} = props;
     let onview;
-    let recolor;
 
     if (choice===false){
-      onview = "M4.95,0h112.68c2.74,0,4.95,2.22,4.95,4.95v112.97c0,2.74-2.22,4.95-4.95,4.95c-1.37,0-2.61-0.56-3.51-1.46L61.16,75.79 L8.18,121.66c-2.06,1.78-5.18,1.56-6.97-0.5c-0.81-0.93-1.2-2.09-1.2-3.23H0V4.95C0,2.22,2.22,0,4.95,0L4.95,0z M112.68,9.91H9.91 v97.2l47.97-41.54c1.82-1.62,4.61-1.68,6.51-0.04l48.3,41.61V9.91L112.68,9.91z"
-      recolor = "fill-black dark:fill-white w-5 h-6"
+      onview = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+      </svg>
     }
     else if (choice===true){
-      onview = "0,0 122.57,0 122.57,122.88 61.13,69.95 0,122.88 0,0"
-      recolor = "fill-black dark:fill-white w-5 h-6"
+      onview = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clipRule="evenodd" />
+      </svg>
+
     }
     else {
-      onview = "M4.95,0h112.68c2.74,0,4.95,2.22,4.95,4.95v112.97c0,2.74-2.22,4.95-4.95,4.95c-1.37,0-2.61-0.56-3.51-1.46L61.16,75.79 L8.18,121.66c-2.06,1.78-5.18,1.56-6.97-0.5c-0.81-0.93-1.2-2.09-1.2-3.23H0V4.95C0,2.22,2.22,0,4.95,0L4.95,0z M112.68,9.91H9.91 v97.2l47.97-41.54c1.82-1.62,4.61-1.68,6.51-0.04l48.3,41.61V9.91L112.68,9.91z"
-      recolor = "fill-black dark:fill-white w-5 h-6"
+      onview = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+               </svg>
     }
 
     return (
       <button
       onClick ={onClick}
-      className="hover:opacity-25"
+      className="text-black dark:text-white w-7 h-7 hover:opacity-25 pl-4"
       >
-      <svg className={recolor}
-      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.07" >
-      <path d={onview}/>
-      <g>
-      </g>
-      </svg>
+      {onview}
   </button>
 
     );

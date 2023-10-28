@@ -1,3 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.57 122.88" style="enable-background:new 0 0 122.57 122.88" xml:space="preserve"><style type="text/css"><![CDATA[
-	.st0{fill-rule:evenodd;clip-rule:evenodd;}
-]]></style><g><polygon class="st0" points="0,0 122.57,0 122.57,122.88 61.13,69.95 0,122.88 0,0"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+</svg>

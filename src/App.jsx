@@ -51,16 +51,16 @@ function App() {
    
   return (
     <>
+    <div className="fixed md:relative flex h-full w-full top-0 left-0 justify-center pb-11 md:pb-0">
+      <Menu ChangePage={setPage}/>
+      <Home/>
+    </div>
     <ThemeButton label="Switch Appearance" 
           imgUrl="M12.56,87.39c6.93,0,12.56,5.62,12.56,12.56c0,6.93-5.62,12.56-12.56,12.56C5.62,112.5,0,106.88,0,99.95 C0,93.01,5.62,87.39,12.56,87.39L12.56,87.39z M35.07,88.24h86.38c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43 H35.07c-0.79,0-1.43-0.64-1.43-1.43V89.67C33.64,88.88,34.29,88.24,35.07,88.24L35.07,88.24z M35.07,44.7h86.38 c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43H35.07c-0.79,0-1.43-0.64-1.43-1.43V46.13 C33.64,45.34,34.29,44.7,35.07,44.7L35.07,44.7z M35.07,1.16h86.38c0.79,0,1.43,0.64,1.43,1.43v19.93c0,0.79-0.64,1.43-1.43,1.43 H35.07c-0.79,0-1.43-0.64-1.43-1.43V2.59C33.64,1.8,34.29,1.16,35.07,1.16L35.07,1.16z M12.56,43.69c6.93,0,12.56,5.62,12.56,12.56 c0,6.93-5.62,12.56-12.56,12.56C5.62,68.81,0,63.19,0,56.25C0,49.32,5.62,43.69,12.56,43.69L12.56,43.69z M12.56,0 c6.93,0,12.56,5.62,12.56,12.56c0,6.93-5.62,12.56-12.56,12.56C5.62,25.11,0,19.49,0,12.56C0,5.62,5.62,0,12.56,0L12.56,0z" 
           onClick={ThemeChange}
           choice={Light}
          />
     <div className="fixed -z-10 top-0 right-0 h-full w-full bg-white dark:bg-black">
-    <Menu ChangePage={setPage}/>
-    <div className="flex h-full w-full justify-center pb-11 md:pb-0">
-      <Home/>
-    </div>
     </div>
     </>
   )
@@ -82,7 +82,7 @@ const ThemeButton = (props) => {
   return (
     <button
     onClick ={onClick}
-    className="fixed top-2 md:top-4 right-2 z-50 cursor-pointer w-11 md:w-48 flex flex-row p-0 md:p-2 gap-0 md:gap-2 justify-center items-center bg-white dark:bg-black hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-full transition-all"
+    className="fixed top-0 md:top-auto bottom-auto md:bottom-1 right-24 md:right-1 z-50 cursor-pointer h-11 md:h-auto w-11 md:w-48 flex flex-row p-0 md:p-2 gap-0 md:gap-2 justify-center items-center bg-white dark:bg-black hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-full transition-all"
     >
     <svg className="fill-black dark:fill-white w-5 h-6"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.07" >

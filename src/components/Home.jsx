@@ -4,7 +4,7 @@ import { Post } from "./Post"
 export const Home = () => {
   return (
     <div className="h-full w-full md:w-3/5 overflow-y-scroll scrollbar-hide flex justify-end md:justify-normal">
-     <div className="w-full py-10 px-2 md:px-32">
+     <div className="w-full py-10 px-2 md:px-24">
      {profiles.map((profile, index) => (
           <Post key={index} username={profile.username} image={profile.image} caption={profile.caption} location={profile.location} likes={profile.likes}/>
         ))}
