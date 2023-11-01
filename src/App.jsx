@@ -82,7 +82,7 @@ const ThemeButton = (props) => {
   return (
     <button
     onClick ={onClick}
-    className="fixed top-0 md:top-auto bottom-auto md:bottom-1 right-24 md:right-1 z-50 cursor-pointer h-11 md:h-auto w-11 md:w-48 flex flex-row p-0 md:p-2 gap-0 md:gap-2 justify-center items-center bg-white dark:bg-black hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-full transition-all"
+    className="fixed top-0 md:top-auto bottom-auto md:bottom-1 right-24 md:right-1 z-50 cursor-pointer h-11 md:h-auto w-11 md:w-48 flex flex-row p-0 md:p-2 gap-0 md:gap-2 justify-center items-center bg-white dark:bg-black md:hover:bg-zinc-200 md:dark:hover:bg-zinc-800 rounded-full transition-all"
     >
     <svg className="fill-black dark:fill-white w-5 h-6"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.07" >

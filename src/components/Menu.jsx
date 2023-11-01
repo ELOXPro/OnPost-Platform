@@ -94,7 +94,7 @@ const MenuButton = (props) => {
     return (
         <button
             onClick ={onClick}
-            className="cursor-pointer w-11 md:w-full flex flex-row p-1 md:p-2 gap-0 md:gap-2 justify-center md:justify-start items-center hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-lg transition-all">
+            className="cursor-pointer w-11 md:w-full flex flex-row p-1 md:p-2 gap-0 md:gap-2 justify-center md:justify-start items-center md:hover:bg-zinc-200 md:dark:hover:bg-zinc-800 rounded-lg transition-all">
             <svg className="fill-black dark:fill-white w-6 h-7"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.07" >
             <path d={imgUrl}/>

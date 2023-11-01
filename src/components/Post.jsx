@@ -149,12 +149,12 @@ export const Post = ({ username, image,caption, location, likes }) => {
           {newComment.trim() !== '' && (
           <button
             onClick={addComment}
-            className="text-sm font-bold font-mono text-blue-500 hover:text-zinc-900 transition-all"
+            className="text-sm font-bold font-mono text-blue-500 md:hover:text-zinc-900 transition-all"
           >
             Post
           </button>
         )}
-        <button onClick={deleteAll} className="invisible h-0 w-0 text-sm font-bold font-mono text-zinc-500 hover:text-zinc-900 transition-all">Clear</button>
+        <button onClick={deleteAll} className="invisible h-0 w-0 text-sm font-bold font-mono text-zinc-500 md:hover:text-zinc-900 transition-all">Clear</button>
         </div>
      </div>
      {onview}
@@ -183,7 +183,7 @@ const ReactButton = (props) => {
     return (
       <button
       onClick ={onClick}
-      className="hover:opacity-25"
+      className="md:hover:opacity-25"
       >
       <svg className={recolor}
       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 112.07" >
@@ -219,7 +219,7 @@ const ReactButton = (props) => {
       <>
         <div className="fixed z-20 top-0 left-0 w-full h-full py-0 md:py-10 px-0 md:px-40 bg-white dark:bg-black border-zinc-400 dark:border-zinc-800 bg-opacity-50 dark:bg-opacity-75">
         <button
-          className="absolute top-2 right-2 md:top-16 md:right-24 z-40 hover:opacity-25 transition-all cursor-pointer"
+          className="absolute top-2 right-2 md:top-16 md:right-24 z-40 md:hover:opacity-25 transition-all cursor-pointer"
           onClick={() => ViewComments(false)}
         >
           <svg className="fill-black dark:fill-white w-8 h-9"
@@ -291,7 +291,7 @@ const ReactButton = (props) => {
     return (
       <button
       onClick ={onClick}
-      className="text-black dark:text-white w-7 h-7 hover:opacity-25 pl-4"
+      className="text-black dark:text-white w-7 h-7 md:hover:opacity-25 pl-4"
       >
       {onview}
   </button>
